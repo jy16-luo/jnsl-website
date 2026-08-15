@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="酒酿石榴liu 的拍摄装备：佳能 M50/R7、镜头、滤镜、拍立得与补光灯">
+  <title>设备 | 酒酿石榴liu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/gear.css">
+</head>
+<body>
+  <header class="gear-header">
+    <nav class="gear-nav container">
+      <a href="index.html" class="gear-nav__logo">📷 酒酿石榴liu</a>
+      <ul class="gear-nav__menu">
+        <li><a href="index.html">返回主页</a></li>
+        <li><a href="index.html#portfolio">作品集</a></li>
+        <li><a href="index.html#booking">约拍</a></li>
+        <li><a href="stats.html">数据</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="gear-scene">
+      <h2 class="gear-scene__title">装备一览 · 点击查看</h2>
+      <p class="gear-scene__hint">点击图上的数字标记，查看设备名称与型号</p>
+      <div class="gear-scene__img-wrap">
+        <img src="images/devices/scene.png" alt="手绘卡通摄影设备场景图" class="gear-scene__img">
+        <div class="gear-scene__spots" id="sceneSpots"></div>
+      </div>
+      <div class="gear-scene__legend" id="sceneLegend"></div>
+    </section>
+
+    <section class="gear-body">
+      <h2 class="gear-body__title">完整设备清单</h2>
+      <div id="gearList"></div>
+    </section>
+  </main>
+
+  <footer class="gear-footer">
+    <div class="container">
+      <p>© 2026 酒酿石榴liu · <a href="index.html">返回主页</a></p>
+    </div>
+  </footer>
+
+  <!-- 设备详情弹窗 -->
+  <div class="gear-modal" id="gearModal" role="dialog" aria-modal="true" aria-label="设备详情" aria-hidden="true">
+    <button class="gear-modal__close" id="gearModalClose" aria-label="关闭">&times;</button>
+    <div class="gear-modal__card" id="gearModalContent"></div>
+  </div>
+
+  <script src="js/gear-data.js"></script>
+  <script src="js/gear.js"></script>
+</body>
+</html>

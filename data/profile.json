@@ -1,0 +1,26 @@
+{
+  "accountId": "酒酿石榴liu",
+  "slogan": "用光影，记录情绪与美",
+  "city": "北京",
+  "updatedAt": "2026-08-15",
+  "xiaohongshu": {
+    "followers": 421,
+    "likes": 11000,
+    "notes": 98,
+    "profileUrl": "",
+    "shareImage": "images/qr-xhs.jpg"
+  },
+  "douyin": {
+    "followers": 393,
+    "likes": 26000,
+    "works": 90,
+    "profileUrl": "",
+    "shareImage": "images/qr-douyin.png"
+  },
+  "images": {
+    "avatar": "images/avatar.jpg",
+    "heroBackground": "images/bg-xhs-profile.jpg",
+    "xhsBackground": "images/bg-xhs-profile.jpg",
+    "douyinBackground": "images/bg-douyin-profile.jpg"
+  }
+}

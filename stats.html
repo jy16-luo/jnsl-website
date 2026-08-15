@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="酒酿石榴liu 社媒数据看板 — 粉丝、获赞、作品趋势统计">
+  <title>数据看板 | 酒酿石榴liu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/stats.css">
+</head>
+<body>
+  <header class="stats-header">
+    <nav class="stats-nav container">
+      <a href="index.html" class="stats-nav__logo">📷 酒酿石榴liu</a>
+      <ul class="stats-nav__menu">
+        <li><a href="index.html">返回主页</a></li>
+        <li><a href="#overview" class="active">数据总览</a></li>
+        <li><a href="#trend">趋势分析</a></li>
+        <li><a href="#history">历史记录</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="stats-hero" data-reveal>
+      <p class="stats-hero__label">📊 数据分析看板</p>
+      <h1 class="stats-hero__title">酒酿石榴liu 社媒数据</h1>
+      <p class="stats-hero__sub">数据更新于 <span id="updatedAt">—</span> · 手动录入，随每次更新自动累积趋势</p>
+      <div class="stats-hero__actions">
+        <a href="#trend" class="btn btn--primary">查看趋势</a>
+        <a href="index.html" class="btn btn--outline">返回主页</a>
+      </div>
+    </section>
+
+    <section id="overview" class="stats-section" data-reveal>
+      <h2 class="stats-section__title">当前数据</h2>
+      <div class="stat-cards" id="statCards"></div>
+    </section>
+
+    <section id="trend" class="stats-section" data-reveal>
+      <h2 class="stats-section__title">趋势分析</h2>
+      <p class="stats-section__sub" id="trendHint"></p>
+      <div class="charts">
+        <div class="chart-card">
+          <h3 class="chart-card__title">粉丝增长趋势</h3>
+          <div class="chart-card__body" id="chartFollowers"></div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-card__title">获赞增长趋势</h3>
+          <div class="chart-card__body" id="chartLikes"></div>
+        </div>
+        <div class="chart-card chart-card--wide">
+          <h3 class="chart-card__title">平台数据对比（最新一次）</h3>
+          <div class="chart-card__body" id="chartCompare"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="history" class="stats-section" data-reveal>
+      <h2 class="stats-section__title">历史记录</h2>
+      <div class="table-wrap">
+        <table class="stats-table" id="statsTable">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>小红书粉丝</th>
+              <th>小红书获赞</th>
+              <th>小红书笔记</th>
+              <th>抖音粉丝</th>
+              <th>抖音获赞</th>
+              <th>抖音作品</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="stats-section stats-howto" data-reveal>
+      <h2 class="stats-section__title">如何更新数据</h2>
+      <ol class="howto-list">
+        <li>把最新的粉丝 / 获赞 / 作品数字发给 Codex（或自己编辑 <code>data/stats-history.json</code>）</li>
+        <li>Codex 会按日期追加一条记录，并同步更新首页 <code>data/profile.json</code></li>
+        <li>刷新本页面即可看到趋势曲线与增长数据</li>
+      </ol>
+      <p class="stats-howto__note">本页为纯前端静态实现，数字均为手动录入，数据真实可靠。</p>
+    </section>
+  </main>
+
+  <footer class="stats-footer">
+    <div class="container">
+      <p>© 2026 酒酿石榴liu · 数据看板 · <a href="index.html">返回主页</a></p>
+    </div>
+  </footer>
+
+  <script src="js/stats-data.js"></script>
+  <script src="js/stats.js"></script>
+</body>
+</html>
