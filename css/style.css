@@ -2198,6 +2198,9 @@ html.js [data-reveal].revealed {
   user-select: none;
   -webkit-user-drag: none;
 }
+.ring__card img:not([src]) {
+  background: linear-gradient(135deg, #f3effb 0%, #e7e0f6 100%);
+}
 .ring__num {
   position: absolute;
   bottom: 10px;

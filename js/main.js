@@ -460,7 +460,7 @@ function buildRing() {
     .map(
       (src, i) => `
       <div class="ring__card" data-idx="${i}">
-        <img src="${src}" alt="${currentAlbum.title} ${i + 1}" loading="lazy">
+        <img data-src="${src}" alt="${currentAlbum.title} ${i + 1}" loading="lazy">
       </div>`
     )
     .join('');
@@ -483,6 +483,28 @@ function applyCardOrientation(img) {
   const card = img.closest('.ring__card');
   if (!card) return;
   card.classList.toggle('ring__card--landscape', img.naturalWidth > img.naturalHeight);
+}
+
+/**
+ * 按需加载环形查看器中当前可见附近的图片（前后各 2 张）
+ * 其余图片等到切换靠近时再加载，避免一次性下载整组照片
+ */
+function loadNearbyImages() {
+  if (!currentAlbum || !elements.ring) return;
+  const n = currentAlbum.photos.length;
+  const range = 2;
+  elements.ring.querySelectorAll('.ring__card img').forEach((img) => {
+    if (img.getAttribute('src')) return; // 已加载
+    const card = img.closest('.ring__card');
+    if (!card) return;
+    const idx = Number(card.dataset.idx);
+    if (Number.isNaN(idx)) return;
+    let diff = ((idx - currentIndex) % n + n) % n;
+    if (diff > n / 2) diff -= n;
+    if (Math.abs(diff) <= range) {
+      img.src = img.dataset.src;
+    }
+  });
 }
 
 /**
@@ -521,6 +543,9 @@ function updateRing() {
   });
 
   elements.ringCounter.textContent = `${currentIndex + 1} / ${n}`;
+
+  // 按需加载当前附近图片
+  loadNearbyImages();
 }
 
 /**
