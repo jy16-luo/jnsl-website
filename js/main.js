@@ -6,6 +6,16 @@
 // 标记 JS 可用（配合 CSS 的 html.js [data-reveal] 使用，避免无 JS 时内容被隐藏）
 document.documentElement.classList.add('js');
 
+// 禁用浏览器滚动位置恢复：刷新后从页面顶部开始，避免跳到上次停留的区块（如约拍）
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+// 若 URL 残留锚点（如 #booking），移除它，避免刷新后自动跳到对应区块
+if (window.location.hash) {
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+}
+window.scrollTo(0, 0);
+
 /** @typedef {Object} Album
  * @property {number} id
  * @property {string} title
@@ -26,7 +36,7 @@ let allAlbums = [];
 const filters = {
   style: 'all',
   season: 'all',
-  sort: 'featured',
+  sort: 'likes-desc',
   search: '',
 };
 

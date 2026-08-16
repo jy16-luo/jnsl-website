@@ -7,7 +7,7 @@
     "year": "2026",
     "season": "夏",
     "featured": true,
-    "cover": "images/works/xinzhongshi-01.jpg",
+    "cover": "images/works/xinzhongshi-04.jpg",
     "photos": [
       "images/works/xinzhongshi-01.jpg",
       "images/works/xinzhongshi-02.jpg",
@@ -278,7 +278,8 @@
     "year": "2026",
     "season": "夏",
     "styles": [
-      "花海"
+      "花海",
+      "生命力"
     ],
     "featured": false,
     "heat": 2.25,
@@ -305,6 +306,118 @@
       "images/works/nanyuan-018.jpg",
       "images/works/nanyuan-019.jpg",
       "images/works/nanyuan-020.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "久敬庄公园·月见草",
+    "description": "久敬庄公园 · 月见草花海写真，收录 18 张。",
+    "date": "2026-05",
+    "year": "2026",
+    "season": "夏",
+    "styles": [
+      "花海"
+    ],
+    "featured": false,
+    "heat": 1.75,
+    "cover": "images/works/jiuzhuang-00.jpg",
+    "photos": [
+      "images/works/jiuzhuang-00.jpg",
+      "images/works/jiuzhuang-01.jpg",
+      "images/works/jiuzhuang-02.jpg",
+      "images/works/jiuzhuang-03.jpg",
+      "images/works/jiuzhuang-04.jpg",
+      "images/works/jiuzhuang-05.jpg",
+      "images/works/jiuzhuang-06.jpg",
+      "images/works/jiuzhuang-07.jpg",
+      "images/works/jiuzhuang-08.jpg",
+      "images/works/jiuzhuang-09.jpg",
+      "images/works/jiuzhuang-10.jpg",
+      "images/works/jiuzhuang-11.jpg",
+      "images/works/jiuzhuang-12.jpg",
+      "images/works/jiuzhuang-13.jpg",
+      "images/works/jiuzhuang-14.jpg",
+      "images/works/jiuzhuang-15.jpg",
+      "images/works/jiuzhuang-16.jpg",
+      "images/works/jiuzhuang-17.jpg"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Merry Christmas",
+    "description": "Merry Christmas · 冬日圣诞主题写真，收录 24 张。",
+    "date": "2025-12",
+    "year": "2025",
+    "season": "冬",
+    "styles": [
+      "生命力"
+    ],
+    "featured": false,
+    "heat": 1.25,
+    "cover": "images/works/christmas-00.jpg",
+    "photos": [
+      "images/works/christmas-00.jpg",
+      "images/works/christmas-01.jpg",
+      "images/works/christmas-02.jpg",
+      "images/works/christmas-03.jpg",
+      "images/works/christmas-04.jpg",
+      "images/works/christmas-05.jpg",
+      "images/works/christmas-06.jpg",
+      "images/works/christmas-07.jpg",
+      "images/works/christmas-08.jpg",
+      "images/works/christmas-09.jpg",
+      "images/works/christmas-10.jpg",
+      "images/works/christmas-11.jpg",
+      "images/works/christmas-12.jpg",
+      "images/works/christmas-13.jpg",
+      "images/works/christmas-14.jpg",
+      "images/works/christmas-15.jpg",
+      "images/works/christmas-16.jpg",
+      "images/works/christmas-17.jpg",
+      "images/works/christmas-18.jpg",
+      "images/works/christmas-19.jpg",
+      "images/works/christmas-20.jpg",
+      "images/works/christmas-21.jpg",
+      "images/works/christmas-22.jpg",
+      "images/works/christmas-23.jpg"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "北师大·毕业季",
+    "description": "北京师范大学 · 毕业季校园写真，收录 21 张。",
+    "date": "2026-06",
+    "year": "2026",
+    "season": "夏",
+    "styles": [
+      "校园风",
+      "生命力"
+    ],
+    "featured": false,
+    "heat": 1.25,
+    "cover": "images/works/biye-cover.jpg",
+    "photos": [
+      "images/works/biye-00.jpg",
+      "images/works/biye-01.jpg",
+      "images/works/biye-02.jpg",
+      "images/works/biye-03.jpg",
+      "images/works/biye-04.jpg",
+      "images/works/biye-05.jpg",
+      "images/works/biye-06.jpg",
+      "images/works/biye-07.jpg",
+      "images/works/biye-08.jpg",
+      "images/works/biye-09.jpg",
+      "images/works/biye-10.jpg",
+      "images/works/biye-11.jpg",
+      "images/works/biye-12.jpg",
+      "images/works/biye-13.jpg",
+      "images/works/biye-14.jpg",
+      "images/works/biye-15.jpg",
+      "images/works/biye-16.jpg",
+      "images/works/biye-17.jpg",
+      "images/works/biye-18.jpg",
+      "images/works/biye-19.jpg",
+      "images/works/biye-20.jpg"
     ]
   }
 ]

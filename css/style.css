@@ -739,6 +739,8 @@ ul, ol {
 }
 
 .social-card {
+  display: flex;
+  flex-direction: column;
   background: var(--color-white);
   border-radius: var(--radius-md);
   padding: 32px;
@@ -751,6 +753,7 @@ ul, ol {
 
 .social-card__platform {
   display: inline-block;
+  align-self: flex-start;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 12px;
@@ -826,6 +829,8 @@ ul, ol {
   display: inline-block;
   font-weight: 500;
   font-size: 0.95rem;
+  margin-top: auto;
+  padding-top: 16px;
 }
 
 .social-works {
@@ -843,16 +848,20 @@ ul, ol {
 
 .social-work img {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
 }
 
 .social-work__info {
+  display: flex;
+  flex-direction: column;
+  min-height: 165px;
   padding: 16px;
 }
 
 .social-work__platform {
   display: inline-block;
+  align-self: flex-start;
   font-size: 0.7rem;
   font-weight: 600;
   padding: 2px 8px;
@@ -877,6 +886,18 @@ ul, ol {
   gap: 12px;
   font-size: 0.8rem;
   color: var(--color-text-light);
+}
+
+/* 代表作卡片整卡可点击（a 标签样式） */
+a.social-work {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+a.social-work:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px var(--color-shadow-hover);
 }
 
 /* ---- 页脚 ---- */
@@ -1584,6 +1605,7 @@ html.js [data-reveal].revealed {
 .hero__bubble:nth-child(4) { animation-delay: 0.95s; }
 .hero__bubble:nth-child(5) { animation-delay: 1.1s; }
 .hero__bubble:nth-child(6) { animation-delay: 1.25s; }
+.hero__bubble:nth-child(7) { animation-delay: 1.4s; }
 @keyframes bubbleFade {
   to { opacity: 1; }
 }
