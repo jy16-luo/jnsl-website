@@ -420,6 +420,8 @@ function openRingViewer(album) {
   if (elements.ringDate) elements.ringDate.textContent = album.date ? `拍摄于 ${formatAlbumDateCN(album.date)}` : '';
   buildRing();
   updateRing();
+  // 打开图集：暂停全局预加载，优先加载当前图集
+  pauseGlobalPreload();
   elements.ringViewer.classList.add('ring-viewer--open');
   elements.ringViewer.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -432,6 +434,8 @@ function closeRingViewer() {
   elements.ringViewer.classList.remove('ring-viewer--open');
   elements.ringViewer.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  // 关闭图集：恢复全局预加载
+  resumeGlobalPreload();
 }
 
 /**
@@ -714,6 +718,7 @@ let preloadQueue = [];
 let preloadIdx = 0;
 let preloadActiveCount = 0;
 let preloadStarted = false;
+let preloadPaused = false;
 
 /** 设备页图片（场景图 + 设备卡片图） */
 const PRELOAD_DEVICE_IMAGES = [
@@ -773,6 +778,17 @@ function startGlobalPreload() {
 }
 let preloadRetry = 0;
 
+/** 暂停全局预加载（打开图集时优先加载当前图集） */
+function pauseGlobalPreload() {
+  preloadPaused = true;
+}
+
+/** 恢复全局预加载 */
+function resumeGlobalPreload() {
+  preloadPaused = false;
+  if (preloadStarted) pumpPreload();
+}
+
 /** 按优先级构建预加载队列：封面/关键图 -> 作品集全部照片（默认热度顺序） */
 function buildPreloadQueue() {
   const queue = [];
@@ -787,6 +803,7 @@ function buildPreloadQueue() {
 
 /** 并发滑动窗口：每张完成后再启动下一张 */
 function pumpPreload() {
+  if (preloadPaused) return;
   while (preloadActiveCount < PRELOAD_CONCURRENCY && preloadIdx < preloadQueue.length) {
     const url = preloadQueue[preloadIdx];
     preloadIdx += 1;
