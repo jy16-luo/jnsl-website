@@ -10,3 +10,5 @@ Thumbs.db
 *.log
 # 代表作封面原图（已压缩到 images/masterpiece，原图不上传）
 masterpiece_cover/
+# 本地备份（原图回退用）
+_backup/
