@@ -486,8 +486,13 @@ function applyCardOrientation(img) {
 }
 
 /**
- * 按需加载环形查看器中当前可见附近的图片（前后各 2 张）
- * 其余图片等到切换靠近时再加载，避免一次性下载整组照片
+ * 当前是否正在后台预加载
+ */
+let preloadActive = false;
+
+/**
+ * 加载环形查看器中当前可见附近的图片（前后各 2 张），
+ * 加载完成后自动在浏览器空闲时继续向后预加载剩余图片
  */
 function loadNearbyImages() {
   if (!currentAlbum || !elements.ring) return;
@@ -505,6 +510,46 @@ function loadNearbyImages() {
       img.src = img.dataset.src;
     }
   });
+  // 空闲时继续预加载后面的图片
+  schedulePreload();
+}
+
+/**
+ * 逐步预加载剩余图片（从当前向后、再向前），每 80ms 加载一张，持续到全部加载完
+ */
+function schedulePreload() {
+  if (preloadActive) return;
+  preloadActive = true;
+  const step = () => {
+    if (!currentAlbum || !elements.ring) {
+      preloadActive = false;
+      return;
+    }
+    const img = findNextUnloaded();
+    if (img) {
+      img.src = img.dataset.src;
+      setTimeout(step, 80);
+    } else {
+      preloadActive = false;
+    }
+  };
+  setTimeout(step, 80);
+}
+
+/**
+ * 环形查找下一个未加载的图片（优先向后）
+ */
+function findNextUnloaded() {
+  const imgs = [...elements.ring.querySelectorAll('.ring__card img')];
+  const anyUnloaded = imgs.some((img) => !img.getAttribute('src'));
+  if (!anyUnloaded) return null;
+  const n = currentAlbum.photos.length;
+  for (let step = 1; step <= n; step += 1) {
+    const idx = (currentIndex + step) % n;
+    const img = imgs.find((i) => Number(i.closest('.ring__card').dataset.idx) === idx);
+    if (img && !img.getAttribute('src')) return img;
+  }
+  return null;
 }
 
 /**
@@ -659,5 +704,105 @@ function formatAlbumDateCN(date) {
   const parts = date.split('-');
   return `${parts[0]} 年 ${Number(parts[1])} 月`;
 }
+
+
+/* ========================================
+   全局图片预加载：打开首页后按优先级后台加载所有页面图片
+   ======================================== */
+const PRELOAD_CONCURRENCY = 4;
+let preloadQueue = [];
+let preloadIdx = 0;
+let preloadActiveCount = 0;
+let preloadStarted = false;
+
+/** 设备页图片（场景图 + 设备卡片图） */
+const PRELOAD_DEVICE_IMAGES = [
+  'images/devices/scene.webp',
+  'images/devices/device-01-m50.jpg',
+  'images/devices/device-02-r7.jpg',
+  'images/devices/device-03-lens-15-45.jpg',
+  'images/devices/device-04-lens-55-200.jpg',
+  'images/devices/device-05-lens-18-150.jpg',
+  'images/devices/device-06-instax.jpg',
+  'images/devices/device-07-flash-godox.jpg',
+  'images/devices/device-08-light-ulanzi.jpg',
+  'images/devices/device-09-filter-soft49.jpg',
+  'images/devices/device-10-filter-soft55.jpg',
+  'images/devices/device-11-filter-star.jpg',
+  'images/devices/device-12-filter-nd.jpg',
+  'images/devices/device-13-tripod.jpg',
+  'images/devices/device-14-bag-crossbody.jpg',
+  'images/devices/device-15-bag-backpack.jpg',
+];
+
+/** 社媒代表作封面 */
+const PRELOAD_MASTERPIECE_IMAGES = [
+  'images/masterpiece/1.jpg',
+  'images/masterpiece/2.jpg',
+  'images/masterpiece/3.jpg',
+  'images/masterpiece/4.jpg',
+  'images/masterpiece/5.jpg',
+  'images/masterpiece/6.jpg',
+];
+
+/** 约拍群二维码等关键图 */
+const PRELOAD_GROUP_IMAGES = [
+  'images/group-xhs.png',
+  'images/group-douyin.jpg',
+  'images/qr-xhs.jpg',
+  'images/qr-douyin.png',
+];
+
+/** 启动全局预加载 */
+function startGlobalPreload() {
+  if (preloadStarted) return;
+  if (!allAlbums || !allAlbums.length) {
+    // 图集数据尚未就绪，稍后重试（最多等 10 秒）
+    if (preloadStarted === false) {
+      const retry = preloadRetry || 0;
+      if (retry < 10) {
+        preloadRetry = retry + 1;
+        setTimeout(startGlobalPreload, 1000);
+        return;
+      }
+    }
+  }
+  preloadStarted = true;
+  buildPreloadQueue();
+  for (let i = 0; i < PRELOAD_CONCURRENCY; i += 1) pumpPreload();
+}
+let preloadRetry = 0;
+
+/** 按优先级构建预加载队列：封面/关键图 -> 作品集全部照片（默认热度顺序） */
+function buildPreloadQueue() {
+  const queue = [];
+  const sorted = allAlbums.slice().sort((a, b) => (b.heat || 0) - (a.heat || 0));
+  queue.push(...PRELOAD_DEVICE_IMAGES);
+  queue.push(...PRELOAD_MASTERPIECE_IMAGES);
+  queue.push(...PRELOAD_GROUP_IMAGES);
+  sorted.forEach((album) => queue.push(album.cover));
+  sorted.forEach((album) => queue.push(...album.photos));
+  preloadQueue = [...new Set(queue)];
+}
+
+/** 并发滑动窗口：每张完成后再启动下一张 */
+function pumpPreload() {
+  while (preloadActiveCount < PRELOAD_CONCURRENCY && preloadIdx < preloadQueue.length) {
+    const url = preloadQueue[preloadIdx];
+    preloadIdx += 1;
+    preloadActiveCount += 1;
+    const img = new Image();
+    img.onload = img.onerror = () => {
+      preloadActiveCount -= 1;
+      pumpPreload();
+    };
+    img.src = url;
+  }
+}
+
+// 页面资源加载完成后启动全局预加载（延迟一点，避免抢占首屏带宽）
+window.addEventListener('load', () => {
+  setTimeout(startGlobalPreload, 300);
+});
 
 document.addEventListener('DOMContentLoaded', init);
