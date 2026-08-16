@@ -10,11 +10,17 @@ document.documentElement.classList.add('js');
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-// 若 URL 残留锚点（如 #booking），移除它，避免刷新后自动跳到对应区块
-if (window.location.hash) {
+// 区分刷新与外部导航：
+// - 刷新（reload）时清除锚点并回到顶部，避免跳到上次停留的区块（如约拍）
+// - 从其他页面带锚点进入（如设备页点 index.html#portfolio）则保留锚点，正常跳到对应区块
+const navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+const isReload = navEntry && navEntry.type === 'reload';
+if (isReload && window.location.hash) {
   history.replaceState(null, '', window.location.pathname + window.location.search);
 }
-window.scrollTo(0, 0);
+if (!window.location.hash) {
+  window.scrollTo(0, 0);
+}
 
 /** @typedef {Object} Album
  * @property {number} id
